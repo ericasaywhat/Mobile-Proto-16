@@ -14,19 +14,19 @@ public class Fraction {
     }
 
     public static int gcd(int m, int n) {
-        if(m>n) {
-            if(n==0) {
+        if (m>n) {
+            if (n==0) {
                 return m;
             } else {
                 return gcd(n,m%n);
             }
         } else if (n>m) {
-            if(m==0) {
+            if (m==0) {
                 return n;
             } else {
                 return gcd(m,n%m);
             }
-        }else {
+        } else {
             return m;
         }
     }
@@ -35,14 +35,12 @@ public class Fraction {
         int numGCD = gcd(numerator, denominator);
         numerator = numerator/numGCD;
         denominator = denominator/numGCD;
-        Fraction simpleFrac= new Fraction(numerator,denominator);
-        return simpleFrac;
-
+        return new Fraction(numerator, denominator);
     }
 
     public Fraction add(Fraction f2) {
-        int numerator = this.numerator*f2.denominator+f2.numerator*denominator;
-        int denominator = this.denominator*f2.denominator;
+        int numerator = this.numerator * f2.denominator + f2.numerator * denominator;
+        int denominator = this.denominator * f2.denominator;
         Fraction simpleAddedFrac = new Fraction(numerator, denominator);
         return simpleAddedFrac.simplify();
     }
