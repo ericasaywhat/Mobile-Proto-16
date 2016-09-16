@@ -54,6 +54,5 @@ public class MoneySaver {
         jim.withdraw(60);
         System.out.println(jim);
         System.out.println(acc);
-
     }
 }

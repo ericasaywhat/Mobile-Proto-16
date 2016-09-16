@@ -7,7 +7,6 @@ public class CheckingAccount extends Account {
 
     public CheckingAccount(long amount) {
         super(amount);
-
     }
 
     public String toString() {
