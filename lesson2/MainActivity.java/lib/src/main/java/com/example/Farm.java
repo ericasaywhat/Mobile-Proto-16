@@ -30,12 +30,10 @@ public class Farm {
                 }
                 else if (o1.getWeight() < o2.getWeight()) {
                     return 1;
-
                 }
                 else {
                     return 0;
                 }
-
             }
         });
         return sortedAnimalList;
@@ -44,13 +42,10 @@ public class Farm {
     public void printCatNames() {
         int length = animalList.size();
         for (int i = 0; i <= length-1; i++ ) {
-            if (animalList.get(i).getSpecies()== "Cat") {
+            if (animalList.get(i).getSpecies() == "Cat") {
                 System.out.println(animalList.get(i).getName());
             }
-
-
         }
-
     }
 
     public double averageLegs() {
