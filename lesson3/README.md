@@ -1,4 +1,7 @@
 # Lesson 3 - Android Basics
+
+**The assignment(s) in this README are due on at midnight on Friday, Sept 16 (due at Friday night. Not Saturday night).**
+
 ### Your first Android application!
 Today in class we'll walk you through making your first Android application. Found in the lesson3 folder is a copy of the application that we will create in class.
 
@@ -106,4 +109,4 @@ Your goal is to start making a quasi-to-do list app. We'll refer to it as the Si
 2. The to-do list fragment should have five editable `textView`s. Add `onClick` listeners to them so that when you click on a to-do list item, an `alertDialog` will popup and ask for new text. The text the user inputs into the `alertDialog` will then replace the old text in the `textView`. Use a type of `layout` to organize the `textView`s. Don't worry if your app doesn't save the items you changed in your list when you switch fragments.
 3. The settings fragment will allow you to change the app's background color. Add three buttons (any type of 'button' will do) that change the app's background color. For example, have one blue, one red, and one green button.
 
-**When you've completed your assignment, [fill out this survey](https://goo.gl/forms/8yPXBdtwBQlXICur2).**
+**This homework is due Friday the 16th (yes, Friday. It's an Olin Monday). When you've completed your assignment, [fill out this survey](https://goo.gl/forms/8yPXBdtwBQlXICur2).**
