@@ -3,7 +3,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,16 +58,14 @@ public class ListFragment extends Fragment {
             }
         });
 
-
         return mainView;
     }
 
+    /**
+     * creates an AlertDialog that takes in a TextView in order to set the user
+     * input as the text for the TextView
+     */
     public void dialogMaker(final TextView t) {
-        /**
-         * creates an AlertDialog that takes in a TextView in order to set the user
-         * input as the text for the TextView
-         */
-
         AlertDialog.Builder input = new AlertDialog.Builder(getContext());
         input.setTitle("Input");
         input.setCancelable(false);
@@ -94,9 +91,6 @@ public class ListFragment extends Fragment {
 
         AlertDialog userInput = input.create();
         userInput.show();
-
-
     }
-
 }
 
