@@ -18,6 +18,13 @@ import butterknife.ButterKnife;
 
 public class MyListFragment extends Fragment {
 
+    // I think Bill already told you this but it's bad practice to have code lines longer than 80
+    // characters. You should leave your comments on the line above (or after two spaces at the end
+    // if it fits.
+
+    // Like this!
+    Object dummy;  // This is an unused object
+
     @BindView(R.id.listView_container) ListView listView;
     @BindView(R.id.newTask) Button newTask;
 
