@@ -9,9 +9,7 @@ import java.util.ArrayList;
 
 import layout.TaskDbSchema;
 
-/**
- * Created by erica on 9/20/16.
- */
+
 public class DBService {
     TaskDbSchema db;
 
@@ -33,53 +31,58 @@ public class DBService {
 
     public void deleteToDo (ToDo task) {
         SQLiteDatabase sql = db.getWritableDatabase();
-        String selection = TaskDbSchema.NAME_TITLE + "LIKE ?";
+        String selection = TaskDbSchema.ID_TITLE + " =?";
         String[] selectionArgs = {String.valueOf(task.getId())};
         sql.delete(TaskDbSchema.TABLE_NAME, selection, selectionArgs);
         sql.close();
     }
 
-    public ArrayList<ToDo> getAll(ToDo task) {
+    public ArrayList<ToDo> getAll() {
         ArrayList<ToDo> taskArray = new ArrayList<>();
-        SQLiteDatabase sql = db.getWritableDatabase();
-        String[] projection = {
-                TaskDbSchema.ID_TITLE,
-                TaskDbSchema.NAME_TITLE,
-                TaskDbSchema.STATUS_TITLE
-        };
+        SQLiteDatabase sql = db.getReadableDatabase();
 
-        String selection = TaskDbSchema.NAME_TITLE + " = ?";
-        String[] selectionArgs = {String.valueOf(task.getId())};
+        Cursor c = sql.rawQuery("select * from " + TaskDbSchema.TABLE_NAME, null);
 
-        String sortOrder = TaskDbSchema.NAME_TITLE + " DESC";
-
-        Cursor c = sql.query(
-                TaskDbSchema.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                sortOrder
-        );
-
-        c.moveToLast();
-        long itemID = c.getLong(c.getColumnIndexOrThrow(TaskDbSchema.ID_TITLE));
         c.moveToFirst();
-        while(c.getLong(c.getColumnIndexOrThrow(TaskDbSchema.ID_TITLE)) < itemID) {
+
+        while(!c.isAfterLast()) {
             long readID = c.getLong(0);
             String readName = c.getString(1);
             int readStatus = c.getInt(2);
             ToDo taskInput = new ToDo(readName, readStatus);
+            taskInput.setId(readID);
             taskArray.add(taskInput);
 
             c.moveToNext();
         }
 
         sql.close();
+        return taskArray;
+    }
+
+    public ArrayList<ToDo> updateToDo(long id, ToDo task) {
+        ArrayList<ToDo> taskArray = new ArrayList<>();
+        SQLiteDatabase sql = db.getReadableDatabase();
+        String selection = TaskDbSchema.ID_TITLE + " =?";
+        String[] selectionArgs = {Long.toString(id)};
+        String[] projection = {
+                TaskDbSchema.ID_TITLE,
+                TaskDbSchema.NAME_TITLE,
+                TaskDbSchema.STATUS_TITLE
+        };
+        Cursor c = sql.query(TaskDbSchema.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        c.moveToFirst();
+
+        while(!c.isAfterLast()) {
+            taskArray.add(task);
+        }
+
 
         return taskArray;
     }
+
+
 
 
 }

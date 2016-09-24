@@ -19,12 +19,13 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ListAdapter extends ArrayAdapter<ToDo> {
+/**
+ * This adapter takes one layout for one element in the list view and applies it to
+ * all elements in the list view for all of the array list.
+ */
 
-    /**
-     * This adapter takes one layout for one element in the list view and applies it to
-     * all elements in the list view for all of the array list.
-     */
+public class ListAdapter extends ArrayAdapter<ToDo> {
+    ListAdapter adapter = this;
 
     private ArrayList<ToDo> taskList;
     @BindView(R.id.delete) Button delete;
@@ -36,19 +37,18 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
     }
 
     @Override
-    public View getView(int pos, View convertView, ViewGroup parent) {
+    public View getView(final int pos, View convertView, ViewGroup parent) {
         final ToDo task = getItem(pos);
-
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, null);
         }
 
         ButterKnife.bind(this,convertView);
-        textView.setText(task.getTaskName());                                                       //sets text in the textView to the string at the position
+        textView.setText(task.getTaskName());                                     //sets text in the textView to the string at the position
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View convertView) {                                               //when textView is clicked, a dialog box is generated using the function below
-                dialogMaker(textView);
+            public void onClick(View convertView) {                             //when textView is clicked, a dialog box is generated using the function below
+                dialogMaker(taskList,textView, pos, adapter);
             }
         });
 
@@ -56,8 +56,11 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                taskList.remove(task);                                                              //removes the task when the delete button is clicked
-                notifyDataSetChanged();                                                             //notifies the adapter that the array list has been modified so that it will regenerate the view
+                DBService service = new DBService(getContext());
+                taskList.remove(task);
+                service.deleteToDo(task);
+                notifyDataSetChanged();                                          //notifies the adapter that the array list has been modified so that it will regenerate the view
+
             }
             });
 
@@ -66,27 +69,32 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
 
 
 
+    /**
+     * creates an AlertDialog that takes in a TextView in order to set the user
+     * input as the text for the TextView
+     */
+    public static void dialogMaker(final ArrayList<ToDo> al, View v, final int i,
+                                   final ArrayAdapter a) {
 
-    public void dialogMaker(final TextView t) {
-        /**
-         * creates an AlertDialog that takes in a TextView in order to set the user
-         * input as the text for the TextView
-         */
+        final DBService service = new DBService(v.getContext());
 
-        AlertDialog.Builder input = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder input = new AlertDialog.Builder(v.getContext());
         input.setTitle("Input");
         input.setCancelable(false);
 
-        final EditText task = new EditText(getContext());
+        final EditText task = new EditText(v.getContext());
         task.setHint("What do you need to do?");
 
         input.setView(task);
+        task.setText(al.get(i).getTaskName()); // This makes it so when you click a to-do the edittext is pre-filled.
 
         input.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 String userString = task.getText().toString();
-                t.setText(userString);
-
+                ToDo taskThing = new ToDo(userString, 0);
+                al.set(i, taskThing);
+                service.updateToDo(taskThing.getId(),taskThing);
+                a.notifyDataSetChanged();
             }
         });
 

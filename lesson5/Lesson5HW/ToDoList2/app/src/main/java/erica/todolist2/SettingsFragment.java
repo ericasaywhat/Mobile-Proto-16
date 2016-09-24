@@ -23,22 +23,17 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
-        // Inflate the layout for this fragment
-//        View settingView = inflater.inflate(R.layout.fragment_settings, container, false);
-
         View settingView = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this,settingView);
 
         final View activityView = getActivity().findViewById(R.id.act_main);
 
-
-
         red = (FloatingActionButton) settingView.findViewById(R.id.red);
 
-//        FloatingActionButtons red, blue, and green set the background of the activity to respective colors when clicked
+    /**
+     * FloatingActionButtons red, blue, and green set the background of the
+     * activity to respective colors when clicked
+     * */
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +41,6 @@ public class SettingsFragment extends Fragment {
                 ((MainActivity) getActivity()).setMyColor(Color.RED);
             }
         });
-
 
         blue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,20 +50,15 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
         green.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityView.setBackgroundColor(Color.GREEN);
                 ((MainActivity) getActivity()).setMyColor(Color.GREEN);
-
-
             }
         });
 
-
         return settingView;
-
 
     }
 }

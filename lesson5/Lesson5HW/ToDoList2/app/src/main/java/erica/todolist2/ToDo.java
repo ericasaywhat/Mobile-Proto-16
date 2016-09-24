@@ -18,7 +18,6 @@ public class ToDo {
         this.id = id;
     }
 
-
     public String getTaskName() {
         return taskName;
     }
