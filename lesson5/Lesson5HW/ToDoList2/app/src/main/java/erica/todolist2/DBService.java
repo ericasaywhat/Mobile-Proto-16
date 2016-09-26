@@ -41,6 +41,7 @@ public class DBService {
         ArrayList<ToDo> taskArray = new ArrayList<>();
         SQLiteDatabase sql = db.getReadableDatabase();
 
+
         Cursor c = sql.rawQuery("select * from " + TaskDbSchema.TABLE_NAME, null);
 
         c.moveToFirst();
@@ -60,23 +61,30 @@ public class DBService {
         return taskArray;
     }
 
-    public ArrayList<ToDo> updateToDo(long id, ToDo task) {
+    public ArrayList<ToDo> updateToDo(ToDo task) {
         ArrayList<ToDo> taskArray = new ArrayList<>();
-        SQLiteDatabase sql = db.getReadableDatabase();
-        String selection = TaskDbSchema.ID_TITLE + " =?";
-        String[] selectionArgs = {Long.toString(id)};
-        String[] projection = {
-                TaskDbSchema.ID_TITLE,
-                TaskDbSchema.NAME_TITLE,
-                TaskDbSchema.STATUS_TITLE
-        };
-        Cursor c = sql.query(TaskDbSchema.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+        SQLiteDatabase sql = db.getWritableDatabase();
 
-        c.moveToFirst();
+        StringBuilder sb = new StringBuilder();
+        sb.append("update ");
+        sb.append(TaskDbSchema.TABLE_NAME);
+        sb.append(" set ");
+        sb.append(TaskDbSchema.NAME_TITLE);
+        sb.append("='");
+        sb.append(task.getTaskName());
+        sb.append("' and ");
+        sb.append(TaskDbSchema.STATUS_TITLE);
+        sb.append("=");
+        sb.append(task.getStatus());
+        sb.append(" where ");
+        sb.append(TaskDbSchema.ID_TITLE);
+        sb.append("=");
+        sb.append(task.getId());
 
-        while(!c.isAfterLast()) {
-            taskArray.add(task);
-        }
+//        String query = "update " + TaskDbSchema.TABLE_NAME + "set " + TaskDbSchema.NAME_TITLE +  "= " + task.getTaskName()
+//                + "and " + TaskDbSchema.STATUS_TITLE + "= " + task.getStatus() + "where " + TaskDbSchema.ID_TITLE + "= " + task.getId();
+        sql.rawQuery(sb.toString(), null);
+
 
 
         return taskArray;

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
     private ArrayList<ToDo> taskList;
     @BindView(R.id.delete) Button delete;
     @BindView(R.id.taskName) TextView textView;
+    @BindView(R.id.checkbox) CheckBox checkBox;
 
     public ListAdapter(Context context, ArrayList<ToDo> tasks) {
         super(context, 0, tasks);
@@ -64,7 +66,28 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
             }
             });
 
-            return convertView;
+
+
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    DBService service = new DBService(getContext());
+                    if (((CheckBox) v).isChecked()) {
+                        task.setStatus(1);
+                        service.updateToDo(task);
+                        setItems(service.getAll());
+
+
+                    }
+
+                }
+            });
+
+        return convertView;
+
+
     }
 
 
@@ -93,7 +116,7 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
                 String userString = task.getText().toString();
                 ToDo taskThing = new ToDo(userString, 0);
                 al.set(i, taskThing);
-                service.updateToDo(taskThing.getId(),taskThing);
+                service.updateToDo(taskThing);
                 a.notifyDataSetChanged();
             }
         });
@@ -107,6 +130,12 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
 
         AlertDialog userInput = input.create();
         userInput.show();
+    }
+
+    public void setItems(ArrayList<ToDo> newList) {
+        taskList.clear();
+        taskList.addAll(newList);
+        notifyDataSetChanged();
     }
 }
 

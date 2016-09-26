@@ -72,12 +72,7 @@ public class MyListFragment extends Fragment {
                        String userString = task.getText().toString();
                        ToDo newTask = new ToDo(userString, 0);
                        service.addToDo(newTask);
-                       ArrayList<ToDo> temp = service.getAll();
-                       taskList.clear();
-                       taskList.addAll(temp);
-
-                       adapter.notifyDataSetChanged();                                  //notifies the adapter that the array list has been modified so that it can regenerate the view
-
+                       adapter.setItems(service.getAll());
                    }
                });
 
