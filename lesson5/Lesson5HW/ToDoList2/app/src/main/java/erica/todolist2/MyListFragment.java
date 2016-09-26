@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,7 @@ public class MyListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                adapter.dialogMaker();
-                ListAdapter.dialogMaker(taskList, view, position, adapter);
+                ListAdapter.dialogMaker(taskList, view, taskList.get(position), adapter);
                 adapter.notifyDataSetChanged();
              }
          });

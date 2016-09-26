@@ -72,7 +72,7 @@ public class DBService {
         sb.append(TaskDbSchema.NAME_TITLE);
         sb.append("='");
         sb.append(task.getTaskName());
-        sb.append("' and ");
+        sb.append("', ");
         sb.append(TaskDbSchema.STATUS_TITLE);
         sb.append("=");
         sb.append(task.getStatus());
@@ -81,9 +81,10 @@ public class DBService {
         sb.append("=");
         sb.append(task.getId());
 
-//        String query = "update " + TaskDbSchema.TABLE_NAME + "set " + TaskDbSchema.NAME_TITLE +  "= " + task.getTaskName()
-//                + "and " + TaskDbSchema.STATUS_TITLE + "= " + task.getStatus() + "where " + TaskDbSchema.ID_TITLE + "= " + task.getId();
-        sql.rawQuery(sb.toString(), null);
+        Cursor c = sql.rawQuery(sb.toString(), null);
+
+        c.moveToFirst();
+        c.close();
 
 
 

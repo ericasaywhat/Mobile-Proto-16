@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 
 public class ListAdapter extends ArrayAdapter<ToDo> {
     ListAdapter adapter = this;
+    DBService service = new DBService(getContext());
 
     private ArrayList<ToDo> taskList;
     @BindView(R.id.delete) Button delete;
@@ -47,10 +48,11 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
 
         ButterKnife.bind(this,convertView);
         textView.setText(task.getTaskName());                                     //sets text in the textView to the string at the position
+        checkBox.setChecked(task.getStatus() == 1);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View convertView) {                             //when textView is clicked, a dialog box is generated using the function below
-                dialogMaker(taskList,textView, pos, adapter);
+                dialogMaker(taskList,textView, task, adapter);
             }
         });
 
@@ -58,30 +60,22 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DBService service = new DBService(getContext());
                 taskList.remove(task);
                 service.deleteToDo(task);
                 notifyDataSetChanged();                                          //notifies the adapter that the array list has been modified so that it will regenerate the view
 
             }
-            });
+        });
 
 
 
 
         checkBox.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
-                    DBService service = new DBService(getContext());
-                    if (((CheckBox) v).isChecked()) {
-                        task.setStatus(1);
-                        service.updateToDo(task);
-                        setItems(service.getAll());
-
-
-                    }
-
+                    task.setStatus(((CheckBox) v).isChecked() ? 1 : 0);
+                    service.updateToDo(task);
+                    setItems(service.getAll());
                 }
             });
 
@@ -96,7 +90,7 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
      * creates an AlertDialog that takes in a TextView in order to set the user
      * input as the text for the TextView
      */
-    public static void dialogMaker(final ArrayList<ToDo> al, View v, final int i,
+    public static void dialogMaker(final ArrayList<ToDo> al, View v, final ToDo toDo,
                                    final ArrayAdapter a) {
 
         final DBService service = new DBService(v.getContext());
@@ -109,14 +103,13 @@ public class ListAdapter extends ArrayAdapter<ToDo> {
         task.setHint("What do you need to do?");
 
         input.setView(task);
-        task.setText(al.get(i).getTaskName()); // This makes it so when you click a to-do the edittext is pre-filled.
+        task.setText(toDo.getTaskName()); // This makes it so when you click a to-do the edittext is pre-filled.
 
         input.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 String userString = task.getText().toString();
-                ToDo taskThing = new ToDo(userString, 0);
-                al.set(i, taskThing);
-                service.updateToDo(taskThing);
+                toDo.setTaskName(userString);
+                service.updateToDo(toDo);
                 a.notifyDataSetChanged();
             }
         });
