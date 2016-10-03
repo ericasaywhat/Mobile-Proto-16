@@ -45,10 +45,6 @@ public class MainActivityFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            // YOUR CODE HERE. DO SOMETHING WHEN A RESPONSE COMES IN.
-            // Hint: remove the first three characters, parse the response into a JSONArray,
-            // and pass it into your extractPriceFromJSON() function.
         }
     };
 
@@ -69,26 +65,18 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
 
-
         final Context c = this.getContext();
-
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String myUrl = buildSearchURL(input.getText().toString());
-
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, myUrl, responseListener,errorListener);
 
                 MySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
 
             }
-
-
-                // Create a StringRequest using the URL and the listeners declared above.
-                // Add the request to your RequestQueue from your MySingleton class
-            });
+        });
 
         return view;
     }
@@ -109,10 +97,8 @@ public class MainActivityFragment extends Fragment {
     }
 
     private String extractPriceFromJSON(JSONArray array) throws JSONException {
-        // Your code here. Extract the price value from the JSON array
         JSONObject company = array.getJSONObject(0);
         String stockPrice = company.getString("l");
-        Log.d("erca",stockPrice);
 
         return stockPrice;
     }
