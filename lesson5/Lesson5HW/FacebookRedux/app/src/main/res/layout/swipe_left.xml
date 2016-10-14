@@ -7,15 +7,15 @@
     android:layout_height="75dp"
     android:background="@android:color/holo_green_dark">
 
-<TextView android:id="@+id/archive"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="end"
-    android:layout_marginTop="25dp"
-    android:layout_marginRight="20dp"
-    android:text="@string/archived"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:textColor="#ffffff" />
+    <TextView android:id="@+id/archive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/archived"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff" />
 
 
 

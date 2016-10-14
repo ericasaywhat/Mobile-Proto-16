@@ -1,6 +1,7 @@
 
 <?xml version="1.0" encoding="utf-8"?>
 
+// There isn't much to say - looks pretty solid, make sure you keep in mind screen rotation
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
