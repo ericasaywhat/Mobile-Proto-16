@@ -23,9 +23,10 @@ public class MyListFragment extends Fragment {
     @BindView(R.id.listView_container) ListView listView;
     @BindView(R.id.newTask) Button newTask;
 
-    ListAdapter adapter;                //declares a list adapter called adapter
-    ArrayList <ToDo> taskList;          //declares an array list called taskList
-    DBService service;
+    // These should be private
+    private ListAdapter adapter;                //declares a list adapter called adapter
+    private ArrayList <ToDo> taskList;          //declares an array list called taskList
+    private DBService service;
 
     public MyListFragment() {
 
