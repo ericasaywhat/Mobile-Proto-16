@@ -26,6 +26,8 @@ import butterknife.ButterKnife;
  */
 
 public class ListAdapter extends ArrayAdapter<ToDo> {
+
+    // Don't forget to make these private!
     ListAdapter adapter = this;
     DBService service = new DBService(getContext());
 
