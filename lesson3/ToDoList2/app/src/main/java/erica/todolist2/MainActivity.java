@@ -16,20 +16,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);                                                     //gets the layout for the view from activity main
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);                                     //defines the toolbar
-        setSupportActionBar(toolbar);                                                               //makes the toolbar
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         final Fragment listFrag = new ListFragment();
-        replaceFragment(listFrag);                                                                  //calls the replaceFragment method defined below for the current view to be the list fragment
+        replaceFragment(listFrag); // default view is the list fragment
 
-        Button button = (Button) findViewById(R.id.button);                                         //makes the button
-        button.setOnClickListener(new View.OnClickListener() {
+        Button listFragmentButton = (Button) findViewById(R.id.button);
+        listFragmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(listFrag);                                                          //when the button is clicked view goes back to list fragment
-
-
+                replaceFragment(listFrag); // Go back to the list fragment
             }
         });
     }
@@ -42,10 +40,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * When "Settings" is called uses replaceFragment method defined below to replace the current
+     * fragment with settings fragment
+     */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {                                           //there is an option called "Settings" in the menu
-        /**When "Settings" is called uses replaceFragment method
-         *defined below to replace the current fragment with settings fragment */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // There is an option called "Settings" in the menu
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             Fragment settingsFrag = new SettingsFragment();
@@ -55,14 +56,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * method replaces the current fragment with the fragment that is given as an input
+     */
     public void replaceFragment(Fragment fragment) {
-        /**method replaces the current fragment with the fragment
-            that is given as an input */
-        FragmentManager manager;                                                                    //initializes manager as FragmentManager
-        FragmentTransaction transaction;                                                            //initializes transaction as FragmentTransaction
-
-        manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
 
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null).commit();

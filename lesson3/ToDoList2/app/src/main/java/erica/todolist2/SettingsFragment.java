@@ -21,11 +21,11 @@ public class SettingsFragment extends Fragment {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View activityView = getActivity().findViewById(R.id.linear_layout);                 //defines the view whose background we want to set the color to
+                //defines the view whose background we want to set the color to
+                View activityView = getActivity().findViewById(R.id.linear_layout);
                 activityView.setBackgroundColor(Color.RED);
             }
         });
-
 
         FloatingActionButton blue = (FloatingActionButton) settingView.findViewById(R.id.blue);
         blue.setOnClickListener(new View.OnClickListener() {
@@ -36,22 +36,16 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
         FloatingActionButton green = (FloatingActionButton) settingView.findViewById(R.id.green);
         green.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View activityView = getActivity().findViewById(R.id.linear_layout);
                 activityView.setBackgroundColor(Color.GREEN);
-
-
             }
         });
 
-
         return settingView;
-
-
     }
 }
 
