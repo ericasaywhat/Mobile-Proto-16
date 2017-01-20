@@ -8,7 +8,7 @@ public class Dog extends Animal {
 
 
     public Dog(String name, String color) {
-        super(4,new Random().nextInt(25),"Dog", name, color);
+        super(4, new Random().nextInt(25), "Dog", name, color);
     }
 
 

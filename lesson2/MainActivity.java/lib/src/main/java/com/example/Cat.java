@@ -8,13 +8,12 @@ import java.util.Random;
 public class Cat extends Animal{
 
     public Cat(String name, String color) {
-        super(4,new Random().nextInt(25),"Cat", name, color);
+        super(4, new Random().nextInt(25), "Cat", name, color);
     }
 
 
     @Override
     public void grow() {
         setWeight(getWeight()*3);
-
     }
 }

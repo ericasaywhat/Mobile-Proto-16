@@ -8,7 +8,7 @@ import java.util.Random;
 public class Cow extends Animal{
 
     public Cow(String name, String color) {
-        super(4,new Random().nextInt(100)+100,"Cow", name, color);
+        super(4, new Random().nextInt(100)+100, "Cow", name, color);
     }
 
 
